@@ -1,4 +1,5 @@
-import { canvas, decode, drawPreview, transform } from './image.js';
+import { canvas, decode, drawPreview, artworkRatio } from './image.js';
+import { loadTextFonts } from './typography.js';
 
 export const APPEARANCES = [['original', 'Original'], ['gray', 'Tons de cinza'], ['black', 'Preto'], ['white', 'Branco']];
 export const WIDTHS = [256, 128, 64, 32];
@@ -11,7 +12,7 @@ export function pngBlob(c) {
 export function fileName(name, kind) {
   return (name.replace(/\.[^.]+$/, '').normalize('NFKD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9_-]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 70) || 'logotipo') + '-craft-brand-' + (kind === 'preview' ? 'previa' : 'prancha') + '.png';
 }
-export function boardLayout(file, sections) {
+export function boardLayout(file, sections, settings = {}) {
   const blocks = [], proofs = [], column = (1016 - (sections.length - 1) * 24) / sections.length;
   const ordered = ['backgrounds', 'versions', 'reduction'].filter(type => sections.includes(type));
   for (const [i, type] of ordered.entries()) {
@@ -20,7 +21,7 @@ export function boardLayout(file, sections) {
     let height = 44 + (sample + 44) * (type === 'versions' ? 4 : 3);
     if (type === 'reduction') {
       let top = y + 44;
-      for (const width of WIDTHS) { const h = width * file.height / file.width; proofs.push({ x, y: top, width, height: h }); top += h + 44; }
+      for (const width of WIDTHS) { const h = width * artworkRatio(file, settings); proofs.push({ x, y: top, width, height: h }); top += h + 44; }
       height = top - y;
     }
     blocks.push({ type, x, y, sample, column, height });
@@ -30,6 +31,7 @@ export function boardLayout(file, sections) {
 export async function generatePNG(file, settings, mode, sections) {
   await document.fonts.ready;
   await document.fonts.load('600 16px Manrope');
+  await loadTextFonts(settings);
   let out, layout = null;
   if (mode === 'preview') {
     // The editor composition is square. This is the image stage, never a screenshot of the 9:16 UI.
@@ -37,7 +39,7 @@ export async function generatePNG(file, settings, mode, sections) {
     drawPreview(out.getContext('2d'), file, settings, 0, 0, 1080, 1080);
   } else {
     if (!sections.length) throw new Error('Selecione pelo menos um teste.');
-    layout = boardLayout(file, sections);
+    layout = boardLayout(file, sections, settings);
     out = canvas(layout.width, layout.height, true);
     const ctx = out.getContext('2d');
     ctx.fillStyle = '#F4F3EE'; ctx.fillRect(0, 0, out.width, out.height);
@@ -65,8 +67,7 @@ export async function generatePNG(file, settings, mode, sections) {
         label(text, x, y + block.sample + 24, 16);
       });
       if (block.type === 'reduction') for (const proof of layout.proofs) {
-        ctx.fillStyle = '#FFFFFF'; ctx.fillRect(proof.x, proof.y, proof.width, proof.height);
-        ctx.drawImage(transform(file, settings.appearance), proof.x, proof.y, proof.width, proof.height);
+        drawPreview(ctx, file, { ...settings, background: 'white', scale: settings.layers?.length ? settings.scale : 100 }, proof.x, proof.y, proof.width, proof.height);
         label(`${proof.width} px`, proof.x, proof.y + proof.height + 24, 16);
       }
     }

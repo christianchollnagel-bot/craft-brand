@@ -1,5 +1,6 @@
 export const DEFAULTS = Object.freeze({ background: 'transparent', appearance: 'original', scale: 80, color: '#E8DCC8' });
-export const equal = (a, b) => Object.keys(DEFAULTS).every(key => a[key] === b[key]);
+export const equal = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+const copy = value => structuredClone(value);
 export class Session {
   constructor() {
     this.file = null;
@@ -19,28 +20,38 @@ export class Session {
   openPanel(panel) {
     this.original = false;
     this.panel = panel;
-    this.draft = panel === 'tools' ? null : { ...this.settings };
+    this.draft = panel === 'tools' ? null : copy(this.settings);
   }
-  cancel() { this.draft = null; this.panel = null; this.original = false; }
+  cancel() { this.draft = null; this.panel = null; this.original = false; this.collectAssets(); }
+  collectAssets() {
+    if (!this.file?.overlays) return;
+    const states = [this.settings, this.draft, ...this.history.flatMap(h => [h.before, h.after])];
+    const used = new Set(states.flatMap(s => (s?.layers || []).map(l => l.asset)));
+    for (const [id, asset] of this.file.overlays) if (!used.has(id)) { asset.dispose(); this.file.overlays.delete(id); }
+  }
   commit(next = this.draft) {
+    if (next) {
+      next = copy(next);
+      if (!next.layers?.length) delete next.layers;
+    }
     if (next && !equal(next, this.settings)) {
       this.history.splice(this.position);
-      this.history.push({ before: { ...this.settings }, after: { ...next } });
+      this.history.push({ before: copy(this.settings), after: copy(next) });
       this.position++;
-      this.settings = { ...next };
+      this.settings = copy(next);
     }
     this.cancel();
   }
   undo() {
     this.cancel();
     if (!this.position) return false;
-    this.settings = { ...this.history[--this.position].before };
+    this.settings = copy(this.history[--this.position].before);
     return true;
   }
   redo() {
     this.cancel();
     if (this.position === this.history.length) return false;
-    this.settings = { ...this.history[this.position++].after };
+    this.settings = copy(this.history[this.position++].after);
     return true;
   }
   replace(file) {

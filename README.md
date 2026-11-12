@@ -18,6 +18,9 @@ O botão **Experimentar com exemplo** carrega o **Forma Pharma**, exemplo farmac
 
 - **FILTROS**: quatro tratamentos rápidos de cor — Aurora, Solar, Botânico e Cobalto. Toque em uma miniatura para ver a prévia e em Aplicar para confirmar. O botão Remover filtro volta à aparência original; Cancelar e Desfazer continuam disponíveis.
 - **FERRAMENTAS → Fundo**: transparência, branco, preto e Sua cor. Use a faixa de matiz ou toque no HEX para abrir o teclado dedicado; também aceita teclado físico e colagem.
+- **FERRAMENTAS → IMPORTAR**: sobreponha PNG, JPG ou SVG ao logotipo. Escolha a imagem na lista para editar largura, posição e opacidade; arraste na prévia ou use as setas do teclado. O botão + adiciona outra imagem, e × remove a selecionada.
+- **FERRAMENTAS → ESCREVA**: crie caixas de texto com até 280 caracteres e quebras de linha. Em Estilo, escolha Manrope, Lora ou Space Mono, cor, tamanho e alinhamento. Em Posição, ajuste a caixa. As fontes são locais e acompanham a distribuição.
+- **FERRAMENTAS → AJUSTAR**: escolha o logotipo ou uma imagem importada. Luz reúne brilho, contraste, tom, ponto branco, ponto preto, altas luzes e sombras; Cor reúne saturação, calor e tonalidade. O botão de restauração zera somente os ajustes da imagem selecionada.
 - **FERRAMENTAS**: também reúne aparência original, cinza, preto e branco; escala de 25–100%; original temporário e comparações.
 - **Cancelar/Fechar/Escape** descartam o ajuste provisório; **Aplicar** confirma uma transação. Desfazer/Refazer também aceitam Ctrl+Z/Ctrl+Shift+Z.
 - **Mais** contém restauração reversível e créditos.
@@ -26,6 +29,8 @@ O botão **Experimentar com exemplo** carrega o **Forma Pharma**, exemplo farmac
 Marcas muito verticais usam alternância de amostras na prova de redução. Uma amostra reduzida para caber é identificada; o PNG mantém as larguras reais anunciadas. Monocromias são simulações e não removem fundos opacos incorporados.
 
 Os filtros recolorem o logotipo por luminosidade, preservando contornos, margens e transparência. Eles substituem a aparência atual, sem acumular efeitos nem alterar fundo ou escala. A comparação de fundos e a prévia exportada usam o filtro aplicado; a aba Versões mantém as quatro versões básicas para referência.
+
+Imagens e textos são camadas sobre a prévia quadrada, na ordem de criação (a mais recente fica por cima). Até 8 camadas podem ser editadas na sessão; o logotipo original continua intacto. Os controles de escala e os filtros atuam no logotipo; cada sobreposição tem seu próprio tamanho. Com camadas, a prova de redução inclui a composição quadrada inteira nas larguras indicadas. Sem camadas, preserva a proporção original do logo. Os guias amarelos de seleção não entram no PNG. [Detalhes e evidências das ferramentas](docs/FERRAMENTAS_EDICAO.md).
 
 ## Distribuição
 

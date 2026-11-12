@@ -4,7 +4,7 @@ Data: 12/11/2026. Aplicação executada localmente em Windows, com Google Chrome
 
 ## Resultado
 
-Os 44 estados foram contemplados por fluxos reais e cenários controlados de teste. Os 20 testes de navegador e os 2 testes de estado passaram, incluindo os quatro filtros criativos, a ampliação do limite para 50 MB, o novo exemplo farmacêutico e a nitidez de SVGs pequenos. Nenhum erro de JavaScript ocorreu no percurso principal. O seletor de arquivos é nativo: seu acionamento e cancelamento foram verificados, sem fabricar a tela do sistema operacional.
+Os 44 estados foram contemplados por fluxos reais e cenários controlados de teste. Os 30 testes de navegador e 3 testes de estado passaram, incluindo Importar, Escreva, Ajustar, os quatro filtros criativos, a ampliação do limite para 50 MB, o novo exemplo farmacêutico e a nitidez de SVGs pequenos. Nenhum erro de JavaScript ocorreu no percurso principal. O seletor de arquivos é nativo: seu acionamento e cancelamento foram verificados, sem fabricar a tela do sistema operacional.
 
 | Verificação | Resultado observado |
 |---|---|
@@ -13,6 +13,10 @@ Os 44 estados foram contemplados por fluxos reais e cenários controlados de tes
 | Limite de 50 MB | PNG real acima de 10 MiB importado e exportado com alfa; SVG válido de exatamente 50 MiB aceito; 50 MiB + 1 byte rejeitado com a sessão anterior preservada |
 | Nitidez vetorial | SVG de 24 × 24 ampliado para PNG de 1080 × 1080 com bordas verificadas por pixels; exemplo Forma Pharma em contornos e PNG de 2400 × 1600 com transparência no fundo e no centro da cruz |
 | Filtros criativos | Aurora, Solar, Botânico e Cobalto geram pixels distintos nos PNGs; alfa de todos os pixels preservado, sem alterar fundo/escala; rascunho, Cancelar, Aplicar, Remover, Desfazer/Refazer e retorno de foco verificados |
+| Importar e Escreva | Camadas independentes, PNG/JPG/SVG, fontes locais distintas, texto multilinha, arraste/teclado, validação recuperável, cancelamento, remoção, histórico e descarte dos recursos sem referências |
+| Ajustar | Dez controles produzem mudanças reais de cor com alfa preservado; destino por imagem e correções independentes; restauração cancelável e histórico |
+| Composição exportada | Texto e imagem sobreposta entram no PNG real; guias amarelos não entram; provas de redução mantêm toda a composição nas quatro larguras |
+| Novos painéis | Ferramentas, importação vazia/preenchida, texto/estilo/posição e luz/cor dentro do viewport nos quatro tamanhos padrão e a 200% em 360 × 640 e 360 × 560 |
 | Estado | Rascunho, Aplicar, Cancelar, Desfazer, Refazer, ramificação do histórico, restauração reversível e retorno à aba de origem |
 | Cor | HEX dedicado e físico, entrada sem cerquilha, erro com última cor válida preservada, matiz com cancelamento reversível |
 | Aparência | Preto permanece preto no cinza; cores viram diferentes níveis de cinza; alfa preservado nas monocromias |
