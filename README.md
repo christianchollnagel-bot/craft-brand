@@ -12,7 +12,7 @@ npm start
 
 Acesse **http://127.0.0.1:5186**. O servidor escuta apenas o próprio computador. Caso a porta esteja ocupada, use `$env:PORT=5187; npm start` e acesse a nova porta. Não é necessário instalar pacotes para abrir ou gerar a distribuição. Não abra o HTML por `file://`: módulos e recursos locais precisam de HTTP.
 
-O botão **Experimentar com exemplo** carrega o “forma” exportado do Figma. **ABRIR** usa o seletor real do sistema, com PNG e SVG até 50 MB. Os arquivos são processados no navegador, sem envio a servidores. A sessão permanece durante navegação e redimensionamento; recarregar a página a encerra.
+O botão **Experimentar com exemplo** carrega o **Forma Pharma**, exemplo farmacêutico criado em SVG com letras em contornos. **ABRIR** usa o seletor real do sistema, com PNG e SVG até 50 MB. Os arquivos são processados no navegador, sem envio a servidores. A sessão permanece durante navegação e redimensionamento; recarregar a página a encerra.
 
 ## Usar
 
@@ -49,6 +49,7 @@ Os testes usam o Google Chrome instalado em `C:/Program Files/Google/Chrome/Appl
 - [Mapa dos 44 estados](docs/MAPA_44_ESTADOS.md)
 - [Resultados de validação](docs/VALIDACAO.md)
 - [Aplicação branca da marca no fundo escuro](docs/APLICACAO_DA_MARCA.md)
+- [Novo exemplo farmacêutico e arquivos](docs/EXEMPLO_FARMA.md)
 
 Os originais .fig e ZIPs foram preservados. Materiais extraídos ficam em `materiais/`; capturas e contextos do Figma em `docs/referencias/`; capturas da aplicação em `docs/capturas/`. Esses materiais não entram no ZIP de hospedagem.
 

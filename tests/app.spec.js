@@ -33,8 +33,8 @@ test('estados 01–36 e 44: fluxo real, transações, cancelamento e retorno', a
   const errors=[];page.on('pageerror',e=>errors.push(e.message));
   await page.goto('/');await page.evaluate(()=>document.fonts.ready);await shot(page,1);
   const chooserPromise=page.waitForEvent('filechooser');await b(page,'Abrir logotipo').click();const chooser=await chooserPromise;expect(chooser.isMultiple()).toBe(false);await chooser.setFiles([]);
-  let release;await page.route('**/public/assets/forma.svg',async route=>{await new Promise(r=>release=r);await route.continue();});
-  await b(page,'Experimentar com exemplo').click();await expect(page.getByRole('heading',{name:'Preparando seu logotipo'})).toBeVisible();await shot(page,3);release();await page.locator('.stage canvas').waitFor();await page.unroute('**/public/assets/forma.svg');
+  let release;await page.route('**/public/assets/forma-pharma.svg',async route=>{await new Promise(r=>release=r);await route.continue();});
+  await b(page,'Experimentar com exemplo').click();await expect(page.getByRole('heading',{name:'Preparando seu logotipo'})).toBeVisible();await shot(page,3);release();await page.locator('.stage canvas').waitFor();await page.unroute('**/public/assets/forma-pharma.svg');
   await page.locator('.stage canvas').waitFor();await shot(page,4);
   await b(page,'FUNDOS').click();await b(page,'Cancelar').click();await shot(page,5);
   await bg(page,'Branco');await shot(page,6);await bg(page,'Preto');await shot(page,7);await bg(page,'Sua cor');await shot(page,8);
@@ -59,7 +59,7 @@ test('estados 01–36 e 44: fluxo real, transações, cancelamento e retorno', a
   await b(page,'Não iniciou o download?').click();await shot(page,32);await expect(page.getByRole('link',{name:'Abrir imagem',exact:true})).toHaveAttribute('href',/^blob:/);
   await action(page,'result-back').click();await page.evaluate(()=>{HTMLCanvasElement.prototype.toBlob=cb=>cb(null);});await b(page,'Gerar prancha').click();await expect(page.getByRole('heading',{name:'Não foi possível preparar a imagem'})).toBeVisible();await shot(page,31);await page.evaluate(()=>{HTMLCanvasElement.prototype.toBlob=window.realBlob;});
   await b(page,'Tentar novamente').click();await b(page,'Baixar PNG').waitFor();await b(page,'Gerar outra prancha').click();await b(page,'Voltar à comparação').click();await expect(page.getByRole('tab',{name:'Redução',exact:true})).toHaveAttribute('aria-selected','true');await b(page,'Voltar').click();
-  const before=await settings(page);await page.locator('#file-picker').setInputFiles(fixture('transparente.png'));await expect(page.getByRole('dialog')).toBeVisible();await shot(page,33);await b(page,'Manter atual').click();expect(await settings(page)).toEqual(before);await expect(page.locator('.file-info')).toContainText('forma.svg');
+  const before=await settings(page);await page.locator('#file-picker').setInputFiles(fixture('transparente.png'));await expect(page.getByRole('dialog')).toBeVisible();await shot(page,33);await b(page,'Manter atual').click();expect(await settings(page)).toEqual(before);await expect(page.locator('.file-info')).toContainText('forma-pharma.svg');
   await page.locator('#file-picker').setInputFiles(fixture('opaco.png'));await b(page,'Trocar logotipo').click();await shot(page,24);await b(page,'Continuar com este PNG').click();expect((await settings(page)).background).toBe('transparent');
   expect(errors).toEqual([]);
 });
@@ -79,7 +79,7 @@ test('estados 37–43: validações reais preservam sessão e recuperação',asy
   const oversized = testInfo.outputPath('grande.png');await writeFile(oversized,Buffer.alloc(50*1024*1024+1));
   await page.locator('#file-picker').setInputFiles(oversized);await expect(page.getByRole('heading',{name:'O arquivo ultrapassa 50 MB'})).toBeVisible();await fit(page,'Arquivo acima de 50 MB');await shot(page,38);await b(page,'Voltar ao logotipo').click();expect(await settings(page)).toEqual(before);
   let external=0;page.on('request',r=>{if(r.url().includes('example.invalid'))external++;});await page.locator('#file-picker').setInputFiles(fixture('ativo.svg'));await expect(page.getByText('Este SVG contém conteúdo ativo não compatível. Exporte uma versão estática.')).toBeVisible();expect(external).toBe(0);
-  await page.goto('/');await page.route('**/public/assets/forma.svg',route=>route.abort());await b(page,'Experimentar com exemplo').click();await expect(page.getByRole('heading',{name:'O exemplo não carregou'})).toBeVisible();await shot(page,43);await page.locator('#file-picker').setInputFiles(fixture('autocontido.svg'));await page.locator('.stage canvas').waitFor();await expect(page.locator('.file-info')).toContainText('autocontido.svg');
+  await page.goto('/');await page.route('**/public/assets/forma-pharma.svg',route=>route.abort());await b(page,'Experimentar com exemplo').click();await expect(page.getByRole('heading',{name:'O exemplo não carregou'})).toBeVisible();await shot(page,43);await page.locator('#file-picker').setInputFiles(fixture('autocontido.svg'));await page.locator('.stage canvas').waitFor();await expect(page.locator('.file-info')).toContainText('autocontido.svg');
 });
 test('transformações e exportação preservam pixels pretos, alfa e margens',async({page})=>{
   await page.goto('/');await page.locator('#file-picker').setInputFiles(fixture('transparente.png'));await page.locator('.stage canvas').waitFor();

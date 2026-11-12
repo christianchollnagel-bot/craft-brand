@@ -19,7 +19,7 @@ Durante a implementação, o usuário pediu cuidado com a aplicação da marca s
 - `public/assets/craft-brand.svg`: cópia byte a byte do SVG oficial em contornos, sem alterações.
 - `public/assets/craft-brand-negativo.svg`: derivado de aplicação que muda somente o preenchimento `#000000` para `#FFFFFF`. Não houve nova composição tipográfica, redesenho, espessamento, contorno adicional, recorte, sombra ou filtro CSS.
 - ViewBox, proporção 1007:340, posições relativas, letras, traçados e espaço vazio interno são idênticos aos do mestre. O espaço interno fornecido é conservado como área de proteção; não foi inventada uma unidade normativa de manual de marca.
-- A identidade Craft Brand não recebe as transformações de cinza/preto/branco do editor. Elas atuam apenas sobre o logotipo carregado. O exemplo “forma” permanece identificado como exemplo.
+- A identidade Craft Brand não recebe as transformações de cinza/preto/branco do editor. Elas atuam apenas sobre o logotipo carregado. O novo “Forma Pharma”, criado a pedido do usuário, permanece identificado como exemplo.
 
 O arquivo original tem SHA-256 `eb90ee1c5eae2069e3bdebf322c10b345442cc246f80e9d3674756644ffe878d`. O script `node scripts/audit-brand.mjs` verificou igualdade com o mestre, mudança exclusiva de preenchimento na versão negativa, proporção efetiva dos três usos na interface, ausência de placa/filtro e pixels pretos do logo na prancha clara.
 

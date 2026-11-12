@@ -117,7 +117,8 @@ export async function importFile(file, example = false) {
     for (let i = 3; i < inspected.length; i += 4) { visible ||= inspected[i] > 0; opaque &&= inspected[i] === 255; }
     inspection.width = 1; inspection.height = 1; inspected = null;
     if (!visible) throw new ImageError('empty');
-    const factor = Math.min(1, LIMITS.workingSide / Math.max(width, height));
+    // SVG is vector: rasterize it at the working resolution, even when its declared viewport is small.
+    const factor = type === 'svg' ? LIMITS.workingSide / Math.max(width, height) : Math.min(1, LIMITS.workingSide / Math.max(width, height));
     const base = canvas(width * factor, height * factor);
     const ctx = base.getContext('2d', { willReadFrequently: true });
     ctx.drawImage(img, 0, 0, base.width, base.height);

@@ -4,13 +4,14 @@ Data: 12/11/2026. Aplicação executada localmente em Windows, com Google Chrome
 
 ## Resultado
 
-Os 44 estados foram contemplados por fluxos reais e cenários controlados de teste. Os 17 testes de navegador e os 2 testes de estado passaram, incluindo a ampliação do limite para 50 MB. Nenhum erro de JavaScript ocorreu no percurso principal. O seletor de arquivos é nativo: seu acionamento e cancelamento foram verificados, sem fabricar a tela do sistema operacional.
+Os 44 estados foram contemplados por fluxos reais e cenários controlados de teste. Os 18 testes de navegador e os 2 testes de estado passaram, incluindo a ampliação do limite para 50 MB, o novo exemplo farmacêutico e a nitidez de SVGs pequenos. Nenhum erro de JavaScript ocorreu no percurso principal. O seletor de arquivos é nativo: seu acionamento e cancelamento foram verificados, sem fabricar a tela do sistema operacional.
 
 | Verificação | Resultado observado |
 |---|---|
 | 360 × 640, 393 × 699, 412 × 732 e 360 × 560, texto padrão | 18 vistas por tamanho: documento sem scroll, controles dentro do viewport, painéis sem overflow e ações sem encobrimento |
 | Entrada e processamento | PNG/SVG reais, exemplo local, cancelamento, validação antes da troca, preservação da sessão em erros |
 | Limite de 50 MB | PNG real acima de 10 MiB importado e exportado com alfa; SVG válido de exatamente 50 MiB aceito; 50 MiB + 1 byte rejeitado com a sessão anterior preservada |
+| Nitidez vetorial | SVG de 24 × 24 ampliado para PNG de 1080 × 1080 com bordas verificadas por pixels; exemplo Forma Pharma em contornos e PNG de 2400 × 1600 com transparência no fundo e no centro da cruz |
 | Estado | Rascunho, Aplicar, Cancelar, Desfazer, Refazer, ramificação do histórico, restauração reversível e retorno à aba de origem |
 | Cor | HEX dedicado e físico, entrada sem cerquilha, erro com última cor válida preservada, matiz com cancelamento reversível |
 | Aparência | Preto permanece preto no cinza; cores viram diferentes níveis de cinza; alfa preservado nas monocromias |
@@ -38,6 +39,7 @@ Diferenças intencionais:
 
 - A marca branca sem placa foi escolhida expressamente pelo usuário durante a execução e prevalece sobre a placa do Figma. Ver `APLICACAO_DA_MARCA.md`.
 - O limite de arquivo foi ampliado de 10 para 50 MB a pedido do usuário; a proteção por dimensões continua ativa.
+- O exemplo do Figma foi substituído por Forma Pharma a pedido do usuário. O novo SVG é vetorial e usa resolução de trabalho de 2048 px para evitar borramento na ampliação. O original permanece preservado. Ver `EXEMPLO_FARMA.md`.
 - Histórico, seleção de seções, opacidade, origem da navegação e miniaturas respondem à sessão real. Não são destinos ou imagens fixas do protótipo.
 - O cinza é calculado por pixel; não reproduz uma eventual recoloração uniforme do mockup.
 - Preparação dura somente o trabalho real, sem percentual fictício ou espera imposta.

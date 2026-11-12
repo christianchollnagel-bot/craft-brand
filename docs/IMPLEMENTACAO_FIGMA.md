@@ -23,6 +23,8 @@ Foram consultados contextos de design dos 44 estados. Cópias técnicas estão e
 
 O exemplo `forma.svg` foi exportado sem redesenho do nó 8:145 (instância Exemplo/forma/original) com texto convertido em contornos pela exportação do Figma. O SVG exportado tem 263 × 179; o arredondamento do exportador em relação à instância fracionária foi preservado. Ícones back, undo, redo, more, close e check foram exportados de instâncias reais. A marca oficial foi copiada sem alteração do pacote local.
 
+Posteriormente, o usuário pediu um exemplo mais moderno, nítido e farmacêutico. O botão agora carrega `forma-pharma.svg`, criado em vetor com tipografia em contornos; o original `forma.svg` permanece preservado. Ver `EXEMPLO_FARMA.md`. SVGs são rasterizados em 2048 px de lado maior para manter nitidez nas ampliações, sem modificar o arquivo original.
+
 ### Atualização aprovada durante a execução
 
 O usuário escolheu a **marca branca diretamente sobre o fundo escuro, sem placa**. A aplicação final usa `craft-brand-negativo.svg` na abertura, no cabeçalho e nos créditos. Essa variante altera exclusivamente o preenchimento do SVG oficial; preserva geometria e área livre. A prancha clara mantém o original preto. Essa decisão posterior prevalece sobre a placa branca inicialmente prevista no Figma. Ver `APLICACAO_DA_MARCA.md` e evidências em `docs/marca`.

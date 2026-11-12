@@ -209,10 +209,10 @@ async function example() {
   if (busy) return;
   clearError(); busy = true; session.export.status = 'idle'; render();
   try {
-    const response = await fetch('./public/assets/forma.svg');
+    const response = await fetch('./public/assets/forma-pharma.svg');
     if (!response.ok) throw new Error();
     const data = await response.blob(); busy = false;
-    await load(new File([data], 'forma.svg', { type: 'image/svg+xml' }), true);
+    await load(new File([data], 'forma-pharma.svg', { type: 'image/svg+xml' }), true);
   } catch { busy = false; showError(new ImageError('example')); }
 }
 function retireResult() {

@@ -9,7 +9,7 @@ Referência: [44 telas no Figma](https://www.figma.com/design/H0i4zEf8MKSDJrWznG
 | 01 | Início | 8:12 | welcome | Abrir a URL sem sessão. |
 | 02 | Selecionar arquivo | 8:47 | input file nativo | Abrir logotipo / ABRIR. Teste verifica evento filechooser, seleção e cancelamento reais. Sem lista fictícia e sem captura simulada do sistema. |
 | 03 | Preparando o logotipo | 8:82 | busy / importFile | Leitura e decodificação pendentes; teste mantém o fetch do exemplo pendente até observar a mensagem. |
-| 04 | Exemplo aberto | 8:101 | Session.replace + editor | Experimentar com exemplo; forma.svg local e aviso de exemplo. |
+| 04 | Exemplo aberto | 8:101 | Session.replace + editor | Experimentar com exemplo; forma-pharma.svg local e aviso de exemplo. O exemplo farmacêutico substitui o original por solicitação do usuário. |
 | 05 | Transparência | 8:164 | settings.background | Fundos → Transparente → Aplicar. |
 | 06 | Fundo branco | 8:222 | settings.background | Fundos → Branco → Aplicar. |
 | 07 | Fundo preto | 8:277 | settings.background | Fundos → Preto → Aplicar. Cores da marca preservadas, sem inversão. |

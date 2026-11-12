@@ -1,0 +1,18 @@
+{
+  "svg": {
+    "outlined": true,
+    "selfContained": true
+  },
+  "png": {
+    "width": 2400,
+    "height": 1600,
+    "transparentCorner": 0,
+    "transparentCross": 0,
+    "tealPixel": [
+      8,
+      127,
+      140,
+      255
+    ]
+  }
+}
