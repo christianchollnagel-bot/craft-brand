@@ -28,6 +28,7 @@ dialog{background:var(--raised);padding:16px;border:0}dialog h2{font-size:1.5rem
 .font-probe{position:absolute;visibility:hidden;pointer-events:none;top:0;left:0;width:1rem;height:1rem}
 .about-page.paged .brand{width:160px}.about-page.paged .about-part{gap:8px}
 .brand{background:transparent;border-radius:0}
+.filters{min-height:176px}.filters .panel-heading h2{margin-right:auto}
 .error-part{display:contents}.error-pager{display:none}.error-page.paged .error-part{display:flex;flex-direction:column;gap:12px;min-height:0}.error-page.paged .error-part:not(.current){display:none}.error-page.paged .error-pager{display:flex}
 .export-part{display:contents}.export-pager{display:none}.export-page.paged .export-part{display:flex;flex-direction:column;gap:12px;min-height:0}.export-page.paged .export-part:not(.current),.export-page.paged .export-return{display:none}.export-page.paged .export-pager{display:flex}.large-text #app .error-page{gap:4px;padding:8px}
 .swatch{width:56px;max-width:100%;border-radius:4px;display:flex;align-items:center;justify-content:center}.swatch .icon{filter:brightness(0) drop-shadow(0 0 1px white)}.swatch.dark .icon{filter:brightness(0) invert(1)}

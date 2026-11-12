@@ -1,4 +1,5 @@
 import { LIMITS } from './limits.js';
+import { FILTERS } from './filters.js';
 export { LIMITS } from './limits.js';
 export class ImageError extends Error {
   constructor(code, detail = '') { super(detail || code); this.code = code; this.detail = detail; }
@@ -133,9 +134,17 @@ export function transform(file, appearance) {
   const ctx = out.getContext('2d', { willReadFrequently: true });
   ctx.drawImage(source, 0, 0);
   const pixels = ctx.getImageData(0, 0, out.width, out.height), d = pixels.data;
+  const tones = FILTERS.find(filter => filter.id === appearance)?.colors;
   for (let i = 0; i < d.length; i += 4) {
-    const gray = appearance === 'gray' ? Math.round(.2126 * d[i] + .7152 * d[i + 1] + .0722 * d[i + 2]) : appearance === 'white' ? 255 : 0;
-    d[i] = d[i + 1] = d[i + 2] = gray;
+    const luminance = .2126 * d[i] + .7152 * d[i + 1] + .0722 * d[i + 2];
+    if (tones) {
+      const position = Math.min(tones.length - 1, luminance / 255 * (tones.length - 1));
+      const lo = Math.floor(position), hi = Math.min(lo + 1, tones.length - 1), mix = position - lo;
+      for (let c = 0; c < 3; c++) d[i + c] = Math.round(tones[lo][c] + (tones[hi][c] - tones[lo][c]) * mix);
+    } else {
+      const gray = appearance === 'gray' ? Math.round(luminance) : appearance === 'white' ? 255 : 0;
+      d[i] = d[i + 1] = d[i + 2] = gray;
+    }
   }
   ctx.putImageData(pixels, 0, 0); file.variants.set(appearance, out); return out;
 }

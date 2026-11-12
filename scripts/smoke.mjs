@@ -6,6 +6,6 @@ const page=await browser.newPage({viewport:{width:360,height:640}});
 page.on('pageerror',e=>console.log('PAGE ERROR',e.message));
 await page.goto('http://127.0.0.1:5186');await page.evaluate(()=>document.fonts.ready);await page.screenshot({path:'docs/capturas/01.png'});
 await page.getByRole('button',{name:'Experimentar com exemplo',exact:true}).click();await page.locator('.stage canvas').waitFor();await page.screenshot({path:'docs/capturas/04.png'});
-await page.getByRole('button',{name:'FUNDOS',exact:true}).click();await page.getByRole('button',{name:'Sua cor',exact:true}).click();await page.locator('#hex').fill('#ZZ12');await page.screenshot({path:'docs/capturas/11.png'});
+await page.getByRole('button',{name:'FERRAMENTAS',exact:true}).click();await page.getByRole('button',{name:'Fundo',exact:true}).click();await page.getByRole('button',{name:'Sua cor',exact:true}).click();await page.locator('#hex').fill('#ZZ12');await page.screenshot({path:'docs/capturas/11.png'});
 console.log(await page.evaluate(()=>({width:innerWidth,height:innerHeight,sw:document.documentElement.scrollWidth,sh:document.documentElement.scrollHeight,elements:[...document.querySelectorAll('#app *')].filter(e=>{const r=e.getBoundingClientRect();return r.width>0&&r.height>0&&(r.bottom>innerHeight+1||r.right>innerWidth+1||r.top< -1||r.left< -1)}).map(e=>e.tagName+'.'+e.className)})));
 await browser.close();

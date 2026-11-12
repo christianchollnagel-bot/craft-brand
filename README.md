@@ -16,13 +16,16 @@ O botão **Experimentar com exemplo** carrega o **Forma Pharma**, exemplo farmac
 
 ## Usar
 
-- **FUNDOS**: transparência, branco, preto e Sua cor. Use a faixa de matiz ou toque no HEX para abrir o teclado dedicado; também aceita teclado físico e colagem.
-- **FERRAMENTAS**: aparência original, cinza, preto e branco; escala de 25–100%; original temporário e comparações.
+- **FILTROS**: quatro tratamentos rápidos de cor — Aurora, Solar, Botânico e Cobalto. Toque em uma miniatura para ver a prévia e em Aplicar para confirmar. O botão Remover filtro volta à aparência original; Cancelar e Desfazer continuam disponíveis.
+- **FERRAMENTAS → Fundo**: transparência, branco, preto e Sua cor. Use a faixa de matiz ou toque no HEX para abrir o teclado dedicado; também aceita teclado físico e colagem.
+- **FERRAMENTAS**: também reúne aparência original, cinza, preto e branco; escala de 25–100%; original temporário e comparações.
 - **Cancelar/Fechar/Escape** descartam o ajuste provisório; **Aplicar** confirma uma transação. Desfazer/Refazer também aceitam Ctrl+Z/Ctrl+Shift+Z.
 - **Mais** contém restauração reversível e créditos.
 - **EXPORTAR** gera a prévia ou uma prancha com as seções selecionadas. **Baixar PNG** solicita o download; **Abrir imagem** é a alternativa disponível após a solicitação ou falha. O aplicativo não consegue confirmar a pasta de salvamento.
 
 Marcas muito verticais usam alternância de amostras na prova de redução. Uma amostra reduzida para caber é identificada; o PNG mantém as larguras reais anunciadas. Monocromias são simulações e não removem fundos opacos incorporados.
+
+Os filtros recolorem o logotipo por luminosidade, preservando contornos, margens e transparência. Eles substituem a aparência atual, sem acumular efeitos nem alterar fundo ou escala. A comparação de fundos e a prévia exportada usam o filtro aplicado; a aba Versões mantém as quatro versões básicas para referência.
 
 ## Distribuição
 

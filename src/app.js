@@ -3,12 +3,14 @@ import { importFile, ImageError, drawPreview } from './image.js';
 import { generatePNG, APPEARANCES, WIDTHS } from './export.js';
 import { ERRORS } from './messages.js';
 import { FILE_SIZE_MB } from './limits.js';
+import { FILTERS } from './filters.js';
 
 export const session = new Session();
 const app = document.querySelector('#app'), picker = document.querySelector('#file-picker'), dialog = document.querySelector('#dialog');
-const labels = Object.fromEntries(APPEARANCES);
+const labels = Object.fromEntries([...APPEARANCES, ...FILTERS.map(({id,label}) => [id,label])]);
 let busy = false, error = null, errorOrigin = null, hex = '#E8DCC8', editingHex = false, toast = '', toastTimer, dialogCancel, dialogReturn, reductionWidth = 256, aboutStep = 0;
 let retiredURLs = [], downloadLocked = false, homeStep = 0, exportStep = 0, errorStep = 0;
+let panelReturn = 'panel:filters';
 const esc = value => String(value).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const icon = name => `<img class="icon" src="./public/assets/${name}.svg" alt="" width="24" height="24">`;
 const brand = (className = '') => `<img class="brand ${className}" src="./public/assets/craft-brand-negativo.svg" alt="Craft Brand" width="1007" height="340">`;
@@ -16,7 +18,7 @@ const button = (text, action, className = '', extra = '') => `<button type="butt
 const iconButton = (name, label, action, extra = '') => button(icon(name), action, 'icon-button', `aria-label="${label}" title="${label}" ${extra}`);
 const heading = title => `<header class="topbar">${iconButton('back', 'Voltar', 'back')}<h1>${title}</h1></header>`;
 const preview = (settings = session.current, className = '', extra = '') => `<canvas class="preview ${className}" data-settings="${esc(JSON.stringify(settings))}" role="img" aria-label="Prévia do logotipo: ${labels[settings.appearance]}" ${extra}></canvas>`;
-const nav = () => `<nav class="bottom-nav" aria-label="Editor">${button('FUNDOS', 'panel:backgrounds', session.panel === 'backgrounds' ? 'active' : '')}${button('FERRAMENTAS', 'panel:tools', session.panel === 'tools' ? 'active' : '')}${button('EXPORTAR', 'export')}</nav>`;
+const nav = () => `<nav class="bottom-nav" aria-label="Editor">${button('FILTROS', 'panel:filters', session.panel === 'filters' ? 'active' : '')}${button('FERRAMENTAS', 'panel:tools', session.panel === 'tools' ? 'active' : '')}${button('EXPORTAR', 'export')}</nav>`;
 const footer = () => `<footer class="adjust-actions">${button(icon('close') + 'Cancelar', 'cancel')}${button(icon('check') + 'Aplicar', 'apply', 'apply', !validHex() ? 'disabled' : '')}</footer>`;
 const tabs = (choices, current, action) => `<div class="tabs" role="tablist">${choices.map(([id, label]) => button(label, `${action}:${id}`, id === current ? 'active' : '', `role="tab" aria-selected="${id === current}" tabindex="${id === current ? 0 : -1}"`)).join('')}</div>`;
 const validHex = () => session.panel !== 'backgrounds' || session.current.background !== 'custom' || /^#[\dA-F]{6}$/i.test(hex);
@@ -71,17 +73,21 @@ function editor() {
     ${session.panel ? panel() : ''}${session.panel && session.panel !== 'tools' ? footer() : nav()}`;
 }
 function panel() {
-  const name = { backgrounds: 'Fundos', tools: 'FERRAMENTAS', appearance: 'Aparência', scale: 'Escala' }[session.panel];
+  const name = { filters: 'Filtros', backgrounds: 'Fundos', tools: 'FERRAMENTAS', appearance: 'Aparência', scale: 'Escala' }[session.panel];
   let body = '';
   if (session.panel === 'backgrounds') {
     if (!editingHex) body += `<div class="swatches">${[['transparent', 'Transp.'], ['white', 'Branco'], ['black', 'Preto'], ['custom', 'Sua cor']].map(([id, label]) => button(`<span class="swatch ${id === 'transparent' ? 'checker' : ''} ${id === 'black' ? 'dark' : ''}" style="background-color:${{ white: '#fff', black: '#000', custom: session.current.color }[id] || ''}">${session.current.background === id ? icon('check') : ''}</span><span>${label}</span>`, `background:${id}`, session.current.background === id ? 'selected' : '', `aria-pressed="${session.current.background === id}" aria-label="${id === 'transparent' ? 'Transparente' : label}"`)).join('')}</div>`;
     if (session.current.background === 'custom') body += `${!editingHex ? `<input id="hue" class="hue-range" type="range" min="0" max="359" value="${hueOf(hex)}" aria-label="Matiz da cor">` : ''}<label class="hex-row" for="hex"><span>HEX</span><input id="hex" aria-label="Cor hexadecimal" value="${esc(hex)}" type="text" inputmode="none" spellcheck="false" autocomplete="off" autocapitalize="characters" aria-invalid="${!validHex()}" ${editingHex ? 'aria-describedby="hex-help"' : ''}></label>${editingHex ? `<p id="hex-help" class="hex-help ${validHex() ? '' : 'error'}">${validHex() ? 'Use seis caracteres, de 0–9 e A–F.' : 'Use uma cor como #2457FF.'}</p><div class="hex-keyboard" aria-label="Teclado hexadecimal">${'0123456789ABCDEF'.split('').concat(['Apagar', 'Limpar']).map(k => button(k, `key:${k}`, k.length > 1 ? 'word-key' : '', `aria-label="${k}"`)).join('')}</div>` : ''}`;
     else body += '<small>Escolha o contexto da sua marca.</small>';
   }
-  if (session.panel === 'appearance') body = `<div class="appearance-options">${APPEARANCES.map(([id, label]) => button(preview({ ...session.current, appearance: id, background: 'custom', color: '#B8B8B8', scale: 90 }, 'thumb') + `<span>${id === 'gray' ? 'Cinza' : label}</span>`, `appearance:${id}`, session.current.appearance === id ? 'selected' : '', `aria-pressed="${session.current.appearance === id}" aria-label="${label}"`)).join('')}</div>`;
+  if (session.panel === 'appearance' || session.panel === 'filters') {
+    const choices = session.panel === 'filters' ? FILTERS.map(({id,label}) => [id,label]) : APPEARANCES;
+    body = `<div class="appearance-options">${choices.map(([id, label]) => button(preview({ ...session.current, appearance: id, background: 'custom', color: '#B8B8B8', scale: 90 }, 'thumb') + `<span>${id === 'gray' ? 'Cinza' : label}</span>`, `appearance:${id}`, session.current.appearance === id ? 'selected' : '', `aria-pressed="${session.current.appearance === id}" aria-label="${label}"`)).join('')}</div>`;
+  }
   if (session.panel === 'scale') body = `<div class="scale-value"><label for="scale">Tamanho na prévia</label><output for="scale">${session.current.scale}%</output></div><input id="scale" type="range" min="25" max="100" value="${session.current.scale}" aria-label="Escala da prévia"><div class="range-labels"><small>25%</small><small>100%</small></div>`;
   if (session.panel === 'tools') body = `<div class="tools-grid">${[['background', 'Fundo', 'panel:backgrounds'], ['appearance', 'Aparência', 'panel:appearance'], ['scale', 'Escala', 'panel:scale'], ['compare', 'Comparar', 'compare:backgrounds'], ['reduction', 'Redução', 'compare:reduction'], ['undo', 'Original', 'original']].map(([glyph, label, action]) => button(`${icon(glyph)}<span>${label}</span>`, action)).join('')}</div>`;
-  return `<section class="panel ${session.panel} ${editingHex ? 'editing-hex' : ''}" aria-label="${name}"><div class="panel-heading"><h2>${name}</h2>${iconButton('close', 'Fechar painel', 'cancel')}</div>${body}</section>`;
+  const resetFilter = session.panel === 'filters' ? iconButton('undo', 'Remover filtro', 'appearance:original', FILTERS.some(f => f.id === session.current.appearance) ? '' : 'disabled') : '';
+  return `<section class="panel ${session.panel} ${editingHex ? 'editing-hex' : ''}" aria-label="${name}"><div class="panel-heading"><h2>${name}</h2>${resetFilter}${iconButton('close', 'Fechar painel', 'cancel')}</div>${body}</section>`;
 }
 function comparison() {
   const s = session.settings;
@@ -245,13 +251,15 @@ function download() {
   render(); setTimeout(() => { downloadLocked = false; }, 800);
 }
 function openPanel(name) {
+  panelReturn = name === 'filters' ? 'panel:filters' : 'panel:tools';
   toast = ''; clearTimeout(toastTimer);
   session.openPanel(name); editingHex = false; hex = session.current.color; render();
-  requestAnimationFrame(() => app.querySelector('.panel button')?.focus({ preventScroll: true }));
+  requestAnimationFrame(() => app.querySelector('.panel button:not(:disabled)')?.focus({ preventScroll: true }));
 }
 function act(action) {
   if (busy) return;
   const [type, value] = action.split(':');
+  const closingPanel = ['cancel', 'apply', 'back'].includes(type) && !!session.panel;
   if (type === 'open') { picker.value = ''; picker.click(); return; }
   if (type === 'example') { example(); return; }
   if (type === 'panel') { openPanel(value); return; }
@@ -298,7 +306,7 @@ function act(action) {
   }
   render();
   if (['compare', 'export', 'about', 'back', 'error-back', 'result-back'].includes(type)) focusHeading();
-  if (['cancel', 'apply'].includes(type)) app.querySelector('[data-action="panel:backgrounds"]')?.focus({ preventScroll: true });
+  if (closingPanel) app.querySelector(`[data-action="${panelReturn}"]`)?.focus({ preventScroll: true });
 }
 function setHex(value) {
   hex = '#' + value.replace(/^#/, '').toUpperCase().slice(0, 24);

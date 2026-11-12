@@ -1,5 +1,13 @@
 [
   {
+    "name": "filtros",
+    "document": [
+      360,
+      640
+    ],
+    "outside": []
+  },
+  {
     "name": "fundos",
     "document": [
       360,

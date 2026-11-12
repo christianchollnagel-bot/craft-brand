@@ -14,7 +14,7 @@ Referência: [44 telas no Figma](https://www.figma.com/design/H0i4zEf8MKSDJrWznG
 | 06 | Fundo branco | 8:222 | settings.background | Fundos → Branco → Aplicar. |
 | 07 | Fundo preto | 8:277 | settings.background | Fundos → Preto → Aplicar. Cores da marca preservadas, sem inversão. |
 | 08 | Fundo personalizado | 8:332 | settings.background/color | Fundos → Sua cor → Aplicar. |
-| 09 | Painel Fundos | 9:165 | panel(backgrounds) | FUNDOS; rascunho e quatro opções reais. |
+| 09 | Painel Fundos | 9:165 | panel(backgrounds) | Ferramentas → Fundo; rascunho e quatro opções reais. A navegação inferior agora oferece FILTROS, conforme pedido posterior. |
 | 10 | Cor personalizada | 9:254 | hex-row | Sua cor, antes de focar o campo. |
 | 11 | Cor inválida e entrada HEX | 9:344 | editingHex / validHex | Digitar #ZZ12; Aplicar desabilitado, última cor válida na prévia; corrigir pelo teclado 6 × 3. |
 | 12 | Ferramentas | 9:491 | panel(tools) | FERRAMENTAS; grade de seis ferramentas. |

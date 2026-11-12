@@ -9,7 +9,7 @@ const settings = page => page.evaluate(async()=>({... (await import('/src/app.js
 async function shot(page,n){await mkdir('docs/capturas',{recursive:true});await page.screenshot({path:`docs/capturas/${String(n).padStart(2,'0')}.png`});}
 async function start(page){await page.goto('/');await page.evaluate(()=>document.fonts.ready);await b(page,'Experimentar com exemplo').click();await page.locator('.stage canvas').waitFor();}
 async function tool(page,name){await b(page,'FERRAMENTAS').click();await b(page,name).click();}
-async function bg(page,name,apply=true){await b(page,'FUNDOS').click();await b(page,name).click();if(apply)await b(page,'Aplicar').click();}
+async function bg(page,name,apply=true){await tool(page,'Fundo');await b(page,name).click();if(apply)await b(page,'Aplicar').click();}
 async function fit(page,label){
   const result=await page.evaluate(()=>{
     const failures=[];
@@ -36,9 +36,9 @@ test('estados 01–36 e 44: fluxo real, transações, cancelamento e retorno', a
   let release;await page.route('**/public/assets/forma-pharma.svg',async route=>{await new Promise(r=>release=r);await route.continue();});
   await b(page,'Experimentar com exemplo').click();await expect(page.getByRole('heading',{name:'Preparando seu logotipo'})).toBeVisible();await shot(page,3);release();await page.locator('.stage canvas').waitFor();await page.unroute('**/public/assets/forma-pharma.svg');
   await page.locator('.stage canvas').waitFor();await shot(page,4);
-  await b(page,'FUNDOS').click();await b(page,'Cancelar').click();await shot(page,5);
+  await tool(page,'Fundo');await b(page,'Cancelar').click();await shot(page,5);
   await bg(page,'Branco');await shot(page,6);await bg(page,'Preto');await shot(page,7);await bg(page,'Sua cor');await shot(page,8);
-  await b(page,'FUNDOS').click();await shot(page,9);await b(page,'Sua cor').click();await shot(page,10);
+  await tool(page,'Fundo');await shot(page,9);await b(page,'Sua cor').click();await shot(page,10);
   await page.locator('#hex').fill('#ZZ12');await expect(b(page,'Aplicar')).toBeDisabled();expect(await page.locator('.stage canvas').getAttribute('data-settings')).toContain('#E8DCC8');await fit(page,'HEX inválido');await shot(page,11);
   await b(page,'Limpar').click();for(const k of '2457FF')await action(page,'key:'+k).click();await b(page,'Aplicar').click();expect((await settings(page)).color).toBe('#2457FF');
   await b(page,'Desfazer').click();expect((await settings(page)).color).toBe('#E8DCC8');await shot(page,35);await b(page,'Refazer').click();expect((await settings(page)).color).toBe('#2457FF');await shot(page,36);
@@ -65,7 +65,8 @@ test('estados 01–36 e 44: fluxo real, transações, cancelamento e retorno', a
 });
 for(const viewport of [{width:360,height:640},{width:393,height:699},{width:412,height:732},{width:360,height:560}])test(`layout sem scroll ${viewport.width}×${viewport.height}`,async({page})=>{
   await page.setViewportSize(viewport);await page.goto('/');await fit(page,'Início');await b(page,'Sobre o Craft Brand').click();await fit(page,'Créditos');await b(page,'Voltar ao início').click();await b(page,'Experimentar com exemplo').click();await page.locator('.stage canvas').waitFor();await fit(page,'Editor');
-  await b(page,'FUNDOS').click();await fit(page,'Fundos');await b(page,'Sua cor').click();await fit(page,'Cor');await page.locator('#hex').fill('#ZZ12');await fit(page,'Teclado HEX');await b(page,'Cancelar').click();
+  await b(page,'FILTROS').click();await fit(page,'Filtros');await b(page,'Aurora').click();await b(page,'Cancelar').click();
+  await tool(page,'Fundo');await fit(page,'Fundos');await b(page,'Sua cor').click();await fit(page,'Cor');await page.locator('#hex').fill('#ZZ12');await fit(page,'Teclado HEX');await b(page,'Cancelar').click();
   await b(page,'FERRAMENTAS').click();await fit(page,'Ferramentas');await b(page,'Aparência').click();await fit(page,'Aparência');await b(page,'Cancelar').click();await tool(page,'Escala');await fit(page,'Escala');await b(page,'Cancelar').click();
   await b(page,'Mais').click();await fit(page,'Mais');await b(page,'Restaurar ajustes').click();await fit(page,'Diálogo');await b(page,'Cancelar').click();
   await tool(page,'Comparar');for(const name of ['Fundos','Versões','Redução']){await page.getByRole('tab',{name,exact:true}).click();await fit(page,name);}

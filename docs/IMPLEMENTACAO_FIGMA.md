@@ -36,11 +36,14 @@ HTML, CSS e JavaScript ES Modules, sem framework nem dependências em produção
 - `src/state.js`: arquivo, ajustes confirmados, rascunho, transações completas, cursor de histórico, painel, aba, pilha de origens e exportação.
 - `src/image.js`: validação de conteúdo, decodificação, transformações e compositor comum.
 - `src/limits.js`: limite de arquivo compartilhado pela validação e pelos textos da interface, além dos limites de processamento.
+- `src/filters.js`: quatro paletas criativas (Aurora, Solar, Botânico e Cobalto), aplicadas por luminosidade e sem alterar alfa.
 - `src/export.js`: PNG da área de prévia e prancha com provas exatas.
 - `src/app.js`: interface semântica e eventos; seletor real, diálogos nativos, foco e recuperação.
 - `src/styles.css`: tokens oficiais, Manrope, composição flexível, teclado HEX e adaptações.
 
 Abrir painel cria rascunho; Aplicar confirma uma transação, Cancelar/Escape/Fechar descartam. Nova alteração após Desfazer elimina o ramo de Refazer. Restauração é transação reversível. Novo arquivo é decodificado antes de substituir a sessão ou pedir confirmação de perda de ajustes. Falhas mantêm a sessão anterior. Comparações/exportação/créditos não criam histórico.
+
+A navegação inferior passou a **FILTROS · FERRAMENTAS · EXPORTAR**, por pedido posterior do usuário. Fundo fica em Ferramentas → Fundo. FILTROS contém Aurora (violeta/turquesa), Solar (coral/âmbar), Botânico (verde/menta) e Cobalto (azuis). As três cores de cada paleta são interpoladas pela luminosidade de cada pixel; alfa, margens e desenho são preservados. Um filtro substitui a aparência anterior, sem empilhar transformações. As quatro aparências básicas continuam em Ferramentas → Aparência. Aplicar, Cancelar, Remover filtro, histórico, comparação de fundos e exportação usam a mesma sessão e compositor.
 
 HEX aceita teclado físico e colagem. `inputmode=none` solicita ausência do teclado do sistema; teclado dedicado 6 × 3. Última cor válida é mantida, Aplicar fica desabilitado durante erro. O comportamento final de teclados móveis depende do navegador e não equivale a teste em aparelho físico.
 
