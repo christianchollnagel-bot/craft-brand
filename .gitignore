@@ -1,0 +1,25 @@
+node_modules/
+test-results/
+playwright-report/
+*.log
+
+# Build outputs and supplied design originals stay local.
+dist/
+*.zip
+*.fig
+materiais/
+
+# Generated evidence and Figma exports are available in the local delivery.
+docs/referencias/
+docs/capturas/
+docs/comparacoes/
+docs/validacao-resultados.json
+
+# Local configuration and credentials.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.DS_Store
+Thumbs.db

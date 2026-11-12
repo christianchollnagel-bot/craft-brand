@@ -1,0 +1,13 @@
+* text=auto
+*.js text eol=lf
+*.mjs text eol=lf
+*.css text eol=lf
+*.html text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.svg text eol=lf
+*.png binary
+*.ttf binary
+*.pdf binary
+# Preserve the supplied brand assets and font license byte for byte.
+public/assets/* -text

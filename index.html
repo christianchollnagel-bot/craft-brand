@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1B1B1D">
+  <meta name="description" content="Teste seu logotipo em diferentes fundos, versões e tamanhos. Processamento local, sem envio de arquivos.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data:; font-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>Craft Brand — Teste. Compare. Decida.</title>
+  <link rel="stylesheet" href="./src/styles.css">
+  <link rel="preload" href="./public/assets/Manrope-Variable.ttf" as="font" type="font/ttf" crossorigin>
+</head>
+<body>
+  <main id="app" aria-label="Craft Brand"></main>
+  <input id="file-picker" type="file" accept="image/png,image/svg+xml,.png,.svg" hidden>
+  <div id="announcement" class="sr-only" role="status" aria-live="polite"></div>
+  <dialog id="dialog" aria-labelledby="dialog-title" aria-describedby="dialog-description"></dialog>
+  <script type="module" src="./src/app.js"></script>
+</body>
+</html>

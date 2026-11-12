@@ -1,0 +1,49 @@
+{
+  "masterSHA256": "eb90ee1c5eae2069e3bdebf322c10b345442cc246f80e9d3674756644ffe878d",
+  "masterPreserved": true,
+  "negativeChangesOnlyFill": true,
+  "applications": [
+    {
+      "name": "abertura",
+      "width": 280,
+      "height": 94.53125,
+      "ratio": 2.96198347107438,
+      "background": "rgba(0, 0, 0, 0)",
+      "filter": "none",
+      "objectFit": "contain",
+      "src": "./public/assets/craft-brand-negativo.svg",
+      "naturalWidth": 1007,
+      "naturalHeight": 340
+    },
+    {
+      "name": "editor",
+      "width": 116,
+      "height": 39.15625,
+      "ratio": 2.962490023942538,
+      "background": "rgba(0, 0, 0, 0)",
+      "filter": "none",
+      "objectFit": "contain",
+      "src": "./public/assets/craft-brand-negativo.svg",
+      "naturalWidth": 1007,
+      "naturalHeight": 340
+    },
+    {
+      "name": "creditos",
+      "width": 220,
+      "height": 74.265625,
+      "ratio": 2.96233957500526,
+      "background": "rgba(0, 0, 0, 0)",
+      "filter": "none",
+      "objectFit": "contain",
+      "src": "./public/assets/craft-brand-negativo.svg",
+      "naturalWidth": 1007,
+      "naturalHeight": 340
+    }
+  ],
+  "board": {
+    "width": 1080,
+    "height": 1162,
+    "logoBlackPixels": 661,
+    "plateWhitePixels": 16279
+  }
+}
