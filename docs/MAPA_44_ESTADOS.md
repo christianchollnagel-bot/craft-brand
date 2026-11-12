@@ -43,7 +43,7 @@ Referência: [44 telas no Figma](https://www.figma.com/design/H0i4zEf8MKSDJrWznG
 | 35 | Ajuste desfeito | 12:944 | Session.undo + toast | Após Aplicar, Desfazer. Restaura o estado completo. |
 | 36 | Ajuste refeito | 12:1001 | Session.redo + toast | Refazer; novo ajuste após Desfazer elimina ramo antigo. |
 | 37 | Formato incompatível | 12:1061 | ImageError(format) | Fixture incompativel.pdf, assinatura não aceita. |
-| 38 | Arquivo acima do limite | 12:1083 | ImageError(size) | Arquivo sintético com 10 MiB + 1 byte criado pelo teste. |
+| 38 | Arquivo acima do limite | 12:1083 | ImageError(size) | Arquivo sintético com 50 MiB + 1 byte criado pelo teste. |
 | 39 | Arquivo corrompido | 12:1105 | ImageError(corrupt) | corrompido.svg ou falha de decodificação; conteúdo ativo também rejeitado com detalhe específico. |
 | 40 | Recursos externos do SVG | 12:1127 | ImageError(external) | externo.svg e CSS @import externo; nenhuma requisição externa disparada. |
 | 41 | Imagem grande demais | 12:1152 | ImageError(dimensions) | muito-grande.svg; teste adicional de imagem embutida excessiva. |

@@ -33,6 +33,7 @@ HTML, CSS e JavaScript ES Modules, sem framework nem dependências em produção
 
 - `src/state.js`: arquivo, ajustes confirmados, rascunho, transações completas, cursor de histórico, painel, aba, pilha de origens e exportação.
 - `src/image.js`: validação de conteúdo, decodificação, transformações e compositor comum.
+- `src/limits.js`: limite de arquivo compartilhado pela validação e pelos textos da interface, além dos limites de processamento.
 - `src/export.js`: PNG da área de prévia e prancha com provas exatas.
 - `src/app.js`: interface semântica e eventos; seletor real, diálogos nativos, foco e recuperação.
 - `src/styles.css`: tokens oficiais, Manrope, composição flexível, teclado HEX e adaptações.
@@ -43,7 +44,7 @@ HEX aceita teclado físico e colagem. `inputmode=none` solicita ausência do tec
 
 ## Imagens e limites
 
-10 MiB por arquivo (a interface mantém o texto aprovado “10 MB”), 16 milhões de pixels e até 8.192 px por lado na importação. A superfície de trabalho derivada tem lado maior de até 2.048 px; o arquivo original e suas margens são preservados. Imagens não são recortadas. Limites protegem a memória e falhas de Canvas são recuperáveis.
+O limite de arquivo passou de 10 para 50 MiB (interface: “50 MB”), a pedido do usuário. Permanecem os limites de 16 milhões de pixels e até 8.192 px por lado na importação. A superfície de trabalho derivada tem lado maior de até 2.048 px; o arquivo original e suas margens são preservados. Imagens não são recortadas. Limites protegem a memória e falhas de Canvas são recuperáveis.
 
 PNG é identificado pela assinatura e IHDR; SVG é analisado como XML. Scripts, eventos, HTML embutido e animações são rejeitados. Referências externas e CSS que possa ocultá-las são rejeitados; referências internas e imagens/fontes base64 compatíveis são admitidas. SVG não confiável nunca é inserido no DOM da interface: é decodificado como imagem por Blob. Símbolos `use` aninhados são rejeitados para evitar grafos cíclicos de renderização. SVG compatível significa documento estático autocontido; textos podem depender das fontes incorporadas ou disponíveis no navegador.
 

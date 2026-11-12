@@ -12,7 +12,7 @@ npm start
 
 Acesse **http://127.0.0.1:5186**. O servidor escuta apenas o próprio computador. Caso a porta esteja ocupada, use `$env:PORT=5187; npm start` e acesse a nova porta. Não é necessário instalar pacotes para abrir ou gerar a distribuição. Não abra o HTML por `file://`: módulos e recursos locais precisam de HTTP.
 
-O botão **Experimentar com exemplo** carrega o “forma” exportado do Figma. **ABRIR** usa o seletor real do sistema, com PNG e SVG até 10 MB. Os arquivos são processados no navegador, sem envio a servidores. A sessão permanece durante navegação e redimensionamento; recarregar a página a encerra.
+O botão **Experimentar com exemplo** carrega o “forma” exportado do Figma. **ABRIR** usa o seletor real do sistema, com PNG e SVG até 50 MB. Os arquivos são processados no navegador, sem envio a servidores. A sessão permanece durante navegação e redimensionamento; recarregar a página a encerra.
 
 ## Usar
 
@@ -54,4 +54,4 @@ Os originais .fig e ZIPs foram preservados. Materiais extraídos ficam em `mater
 
 No repositório Git, esses materiais de origem e evidências geradas permanecem fora do versionamento, assim como `node_modules/`, `dist/` e os ZIPs. O código, os assets utilizados, as fixtures sintéticas, os testes e a documentação estão incluídos. Algumas auditorias visuais em `scripts/` dependem dos materiais da entrega local. Para obter a distribuição a partir de um clone, execute `npm run build`; para executar os testes, instale as dependências com `npm ci`.
 
-Limites de importação: 10 MiB, 16 milhões de pixels, até 8.192 px por lado. SVG deve ser estático e autocontido. Saídas excessivas geram um erro recuperável; ver limites detalhados na documentação. Créditos dos integrantes continuam a preencher, conforme o conteúdo recebido.
+Limites de importação: 50 MiB, 16 milhões de pixels, até 8.192 px por lado. SVG deve ser estático e autocontido. Saídas excessivas geram um erro recuperável; ver limites detalhados na documentação. Créditos dos integrantes continuam a preencher, conforme o conteúdo recebido.

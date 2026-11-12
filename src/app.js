@@ -2,6 +2,7 @@ import { Session, DEFAULTS } from './state.js';
 import { importFile, ImageError, drawPreview } from './image.js';
 import { generatePNG, APPEARANCES, WIDTHS } from './export.js';
 import { ERRORS } from './messages.js';
+import { FILE_SIZE_MB } from './limits.js';
 
 export const session = new Session();
 const app = document.querySelector('#app'), picker = document.querySelector('#file-picker'), dialog = document.querySelector('#dialog');
@@ -43,7 +44,7 @@ function render() {
   app.dataset.panel = session.panel || '';
   if (busy) app.innerHTML = heading(session.export.status === 'preparing' ? 'Preparando PNG' : 'Preparando') + `<section class="page loading"><span class="spinner" aria-hidden="true"></span><h2>${session.export.status === 'preparing' ? 'Preparando seu PNG' : 'Preparando seu logotipo'}</h2><p>${session.export.status === 'preparing' ? 'Reunindo os testes selecionados.' : 'Lendo o arquivo e montando a prévia.'}</p></section>`;
   else if (error) app.innerHTML = errorView();
-  else if (session.view === 'home') app.innerHTML = `<section class="welcome"><div class="welcome-part ${homeStep === 0 ? 'current' : ''}">${brand()}<h1>Veja sua marca<br>em cada contexto.</h1><p>Teste fundos, versões e tamanhos.<br>Compare e leve a prévia com você.</p></div><div class="welcome-part ${homeStep === 1 ? 'current' : ''}">${button('Abrir logotipo', 'open', 'primary')}${button('Experimentar com exemplo', 'example', 'secondary')}<small>PNG ou SVG • até 10 MB</small>${button('Sobre o Craft Brand', 'about', 'quiet')}</div>${button(homeStep ? 'Sobre o aplicativo' : 'Começar', 'home-step', 'secondary home-pager')}</section>`;
+  else if (session.view === 'home') app.innerHTML = `<section class="welcome"><div class="welcome-part ${homeStep === 0 ? 'current' : ''}">${brand()}<h1>Veja sua marca<br>em cada contexto.</h1><p>Teste fundos, versões e tamanhos.<br>Compare e leve a prévia com você.</p></div><div class="welcome-part ${homeStep === 1 ? 'current' : ''}">${button('Abrir logotipo', 'open', 'primary')}${button('Experimentar com exemplo', 'example', 'secondary')}<small>PNG ou SVG • até ${FILE_SIZE_MB} MB</small>${button('Sobre o Craft Brand', 'about', 'quiet')}</div>${button(homeStep ? 'Sobre o aplicativo' : 'Começar', 'home-step', 'secondary home-pager')}</section>`;
   else if (session.view === 'editor') app.innerHTML = editor();
   else if (session.view === 'compare') app.innerHTML = comparison();
   else if (session.view === 'export') app.innerHTML = exportView();

@@ -1,4 +1,5 @@
-export const LIMITS = Object.freeze({ bytes: 10 * 1024 * 1024, pixels: 16_000_000, side: 8192, workingSide: 2048, exportSide: 16384 });
+import { LIMITS } from './limits.js';
+export { LIMITS } from './limits.js';
 export class ImageError extends Error {
   constructor(code, detail = '') { super(detail || code); this.code = code; this.detail = detail; }
 }

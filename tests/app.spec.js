@@ -71,12 +71,13 @@ for(const viewport of [{width:360,height:640},{width:393,height:699},{width:412,
   await tool(page,'Comparar');for(const name of ['Fundos','Versões','Redução']){await page.getByRole('tab',{name,exact:true}).click();await fit(page,name);}
   await b(page,'Exportar comparação').click();await fit(page,'Prancha');await page.getByRole('tab',{name:'Prévia',exact:true}).click();await fit(page,'Prévia');await b(page,'Gerar PNG da prévia').click();await b(page,'Baixar PNG').waitFor();await fit(page,'Resultado');await b(page,'Não iniciou o download?').click();await fit(page,'Download indisponível');
 });
-test('estados 37–43: validações reais preservam sessão e recuperação',async({page})=>{
+test('estados 37–43: validações reais preservam sessão e recuperação',async({page},testInfo)=>{
   await start(page);await bg(page,'Preto');const before=await settings(page);
   for(const [n,file,title] of [[37,'incompativel.pdf','Este formato não é compatível'],[39,'corrompido.svg','Não conseguimos ler o arquivo'],[40,'externo.svg','Este SVG depende de outros arquivos'],[41,'muito-grande.svg','A imagem é grande demais para processar'],[42,'vazio.png','Não encontramos conteúdo visível']]){
     await page.locator('#file-picker').setInputFiles(fixture(file));await expect(page.getByRole('heading',{name:title,exact:true})).toBeVisible();await fit(page,title);await shot(page,n);await b(page,'Voltar ao logotipo').click();expect(await settings(page)).toEqual(before);
   }
-  await page.locator('#file-picker').setInputFiles({name:'grande.png',mimeType:'image/png',buffer:Buffer.alloc(10*1024*1024+1)});await expect(page.getByRole('heading',{name:'O arquivo ultrapassa 10 MB'})).toBeVisible();await shot(page,38);await b(page,'Voltar ao logotipo').click();expect(await settings(page)).toEqual(before);
+  const oversized = testInfo.outputPath('grande.png');await writeFile(oversized,Buffer.alloc(50*1024*1024+1));
+  await page.locator('#file-picker').setInputFiles(oversized);await expect(page.getByRole('heading',{name:'O arquivo ultrapassa 50 MB'})).toBeVisible();await fit(page,'Arquivo acima de 50 MB');await shot(page,38);await b(page,'Voltar ao logotipo').click();expect(await settings(page)).toEqual(before);
   let external=0;page.on('request',r=>{if(r.url().includes('example.invalid'))external++;});await page.locator('#file-picker').setInputFiles(fixture('ativo.svg'));await expect(page.getByText('Este SVG contém conteúdo ativo não compatível. Exporte uma versão estática.')).toBeVisible();expect(external).toBe(0);
   await page.goto('/');await page.route('**/public/assets/forma.svg',route=>route.abort());await b(page,'Experimentar com exemplo').click();await expect(page.getByRole('heading',{name:'O exemplo não carregou'})).toBeVisible();await shot(page,43);await page.locator('#file-picker').setInputFiles(fixture('autocontido.svg'));await page.locator('.stage canvas').waitFor();await expect(page.locator('.file-info')).toContainText('autocontido.svg');
 });
